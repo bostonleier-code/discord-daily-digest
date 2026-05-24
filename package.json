@@ -7,9 +7,7 @@
     "lint": "tsc --noEmit",
     "daily:digest": "dotenv -e .env.local -- tsx src/runDailyDigest.ts"
   },
-  "dependencies": {
-    "@google/generative-ai": "^0.21.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^20.0.0",
     "dotenv-cli": "^7.4.2",
