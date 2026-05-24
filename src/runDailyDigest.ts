@@ -42,6 +42,15 @@ export async function runDailyDigest(): Promise<{ success: boolean; message: str
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
 
+  // Cap to most recent 200 messages to stay within free-tier token limits
+  const MAX_MESSAGES = 200;
+  const trimmed = allMessages.length > MAX_MESSAGES
+    ? allMessages.slice(allMessages.length - MAX_MESSAGES)
+    : allMessages;
+  if (allMessages.length > MAX_MESSAGES) {
+    console.log(`[digest] Trimmed to ${MAX_MESSAGES} most recent messages (had ${allMessages.length})`);
+  }
+
   let previousState: DigestState;
   try {
     previousState = await loadState("json");
@@ -50,10 +59,10 @@ export async function runDailyDigest(): Promise<{ success: boolean; message: str
     previousState = { openLoops: [], recentDigestIds: [] };
   }
 
-  console.log(`[digest] Sending ${allMessages.length} messages to Groq...`);
+  console.log(`[digest] Sending ${trimmed.length} messages to Groq...`);
   let output;
   try {
-    output = await analyzeMessages(config.groqApiKey, allMessages, previousState);
+    output = await analyzeMessages(config.groqApiKey, trimmed, previousState);
     console.log("[digest] Analysis complete.");
   } catch (err) {
     const msg = `[digest] Analysis failed: ${(err as Error).message}`;
