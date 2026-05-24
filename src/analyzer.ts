@@ -68,7 +68,7 @@ function parseOutput(raw: string): ClaudeDigestOutput {
     }
   }
 
-  const required: (keyof ClaudeDigestOutput)[] = ["discordDigest", "openLoops", "topPriorities"];
+  const required: (keyof ClaudeDigestOutput)[] = ["discordDigest", "openLoops", "topPriorities", "livingContext"];
   for (const field of required) {
     if (!(field in parsed)) {
       throw new Error(`Output missing required field: ${field}`);

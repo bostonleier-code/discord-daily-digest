@@ -104,6 +104,15 @@ Return a single valid JSON object. No markdown, no explanation, no extra text.
       "nextAction": "string or null"
     }
   ],
+  "livingContext": {
+    "activeClients": ["string — client name: current job/status"],
+    "keyDecisions": ["string — decision made, with date if known"],
+    "teamNotes": ["string — notable info about a team member"],
+    "vendorStatus": ["string — vendor/partner name: current status"],
+    "pricingNotes": ["string — any pricing decisions or exceptions"],
+    "businessUpdates": ["string — anything changing how the business operates"],
+    "updatedAt": "ISO string"
+  },
   "activeThreads": ["string"],
   "reminders": ["string"],
   "ideaBridges": ["string"],
@@ -155,7 +164,14 @@ export function buildUserPrompt(
       ? JSON.stringify(previousState.openLoops, null, 2)
       : "None";
 
+  const livingContextBlock = previousState.livingContext
+    ? JSON.stringify(previousState.livingContext, null, 2)
+    : "None yet — build it from today's messages.";
+
   return `Today is ${today}.
+
+--- LIVING BUSINESS CONTEXT (auto-updated each run) ---
+${livingContextBlock}
 
 --- PREVIOUS OPEN LOOPS ---
 ${previousLoopsBlock}
@@ -164,5 +180,5 @@ ${previousLoopsBlock}
 ${messageBlock}
 
 ---
-Analyze the above. Update open loops. Return the JSON digest.`;
+Analyze the above. Update open loops and living context based on new messages. Return the full JSON digest.`;
 }

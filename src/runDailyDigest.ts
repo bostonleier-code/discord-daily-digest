@@ -72,6 +72,7 @@ export async function runDailyDigest(): Promise<{ success: boolean; message: str
 
   const newState: DigestState = {
     openLoops: output.openLoops ?? previousState.openLoops,
+    livingContext: output.livingContext ?? previousState.livingContext,
     lastRunAt: new Date().toISOString(),
     recentDigestIds: previousState.recentDigestIds ?? [],
   };
