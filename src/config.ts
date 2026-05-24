@@ -17,13 +17,8 @@ export function loadConfig() {
       .map((s) => s.trim())
       .filter(Boolean),
     discordDigestChannelId: require_env("DISCORD_DIGEST_CHANNEL_ID"),
-    anthropicApiKey: require_env("ANTHROPIC_API_KEY"),
-    cronSecret: require_env("CRON_SECRET"),
+    geminiApiKey: require_env("GEMINI_API_KEY"),
     lookbackHours: parseInt(optional_env("LOOKBACK_HOURS", "48"), 10),
-    storageMode: optional_env("STATE_STORAGE_MODE", "json") as
-      | "json"
-      | "upstash"
-      | "vercel-kv",
   };
 }
 

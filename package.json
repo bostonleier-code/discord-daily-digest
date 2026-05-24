@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/runDailyDigest.ts",
     "build": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "daily:digest": "dotenv -e .env.local -- tsx src/runDailyDigest.ts",
-    "test:dry-run": "DRY_RUN=true dotenv -e .env.local -- tsx src/runDailyDigest.ts"
+    "daily:digest": "dotenv -e .env.local -- tsx src/runDailyDigest.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.0",
-    "@vercel/node": "^3.0.0"
+    "@google/generative-ai": "^0.21.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
