@@ -16,7 +16,15 @@ export async function analyzeMessages(
   const today = new Date().toISOString().split("T")[0];
   const userPrompt = buildUserPrompt(messages, previousState, today);
 
-  const result = await model.generateContent(userPrompt);
+  const TIMEOUT_MS = 60_000;
+  const timeoutPromise = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error("Gemini API timed out after 60s")), TIMEOUT_MS)
+  );
+
+  const result = await Promise.race([
+    model.generateContent(userPrompt),
+    timeoutPromise,
+  ]);
   const raw = result.response.text();
 
   return parseOutput(raw);
