@@ -11,14 +11,26 @@ async function discordGet(
   if (params) {
     for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   }
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bot ${token}` },
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Discord GET ${path} returned ${res.status}: ${text}`);
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await fetch(url.toString(), {
+      headers: { Authorization: `Bot ${token}` },
+    });
+
+    if (res.status === 429) {
+      const json = await res.json() as { retry_after?: number };
+      const wait = Math.ceil((json.retry_after ?? 1) * 1000) + 200;
+      await new Promise(r => setTimeout(r, wait));
+      continue;
+    }
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Discord GET ${path} returned ${res.status}: ${text}`);
+    }
+    return res.json();
   }
-  return res.json();
+  throw new Error(`Discord GET ${path} failed after 3 attempts (rate limited)`);
 }
 
 async function discordPost(
