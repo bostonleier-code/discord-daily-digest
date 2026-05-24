@@ -9,8 +9,8 @@ COMPANY OVERVIEW:
 - A&B Firm retains 100% ownership. No implied equity for workers or managers.
 
 TEAM:
-- Boston Leier: co-founder/CEO. Strategy, pricing, systems, marketing, sales, finance. Final decision-maker.
-- Austin Fern: co-founder/ops partner. Handles execution, partner follow-ups, operations. Needs follow-up often.
+- Boston Leier (Discord ID: <@343237873224646657>): co-founder/CEO. Strategy, pricing, systems, marketing, sales, finance. Final decision-maker.
+- Austin Fern (Discord username: Breezey, ID: <@409796959998705670>): co-founder/ops partner. Handles execution, partner follow-ups, operations. Needs follow-up often.
 - Supervisor (~1): jobsite QC, crew management, CompanyCam photos, walkthroughs
 - Field crew (~6-7): holiday lighting installs, turf cleaning labor. Starting pay ~$20/hr
 - Turf worker candidate: $15/hr cash for now, potential path to contractor or crew lead
@@ -122,39 +122,41 @@ Return a single valid JSON object. No markdown, no explanation, no extra text.
 }
 
 DISCORD DIGEST FORMAT (for discordDigest field):
-Write this exactly like the example below. Prose paragraphs, no bullet points, named owners with @mentions, specific names/amounts/dates from the actual messages. Think sharp EA briefing, not a task list.
+CRITICAL FORMATTING RULES:
+- The discordDigest string MUST use \n\n between every section and \n between paragraphs within a section. No section should run into the next.
+- No bullet points. Prose paragraphs only.
+- No emojis.
+- Use REAL names, amounts, and dates from messages — never say "no updates" if there is anything at all.
+- Boston's Discord mention: <@343237873224646657>
+- Austin's Discord mention: <@409796959998705670>
+- Omit any section that genuinely has nothing to say.
+- Keep under 50 lines total.
+
+Use this exact structure:
 
 **Morning Work Debrief**
-[Day, Month Date]
+[Month D, YYYY]
 
-**SALES** @[primary sales owner]
-[2-4 prose paragraphs. Each paragraph covers one named topic: a specific client, follow-up, or sales item. Include the person's name, what happened, what's open, what to do next. Use exact names, dollar amounts, dates from messages.]
+**SALES** <@409796959998705670>
+[2-4 prose paragraphs. Each covers one specific sales item: named client, what happened, what's open, exact next action. Use names, dollar amounts, dates.]
 
-**OPERATIONS** @[primary ops owner]
-[2-4 prose paragraphs. Each covers one ops topic: a crew issue, vendor decision, tool/system item, or service delivery problem. Be specific. Name people and companies.]
+**OPERATIONS** <@343237873224646657>
+[2-4 prose paragraphs. Each covers one ops item: crew, vendor decision, tool, service issue. Be specific — name people and companies.]
 
-**SHARED** @[owner1] @[owner2]
-[1-3 paragraphs for items that require both Boston and Austin. Highest-risk items go here — security issues, partnership decisions, anything that blocks both sides.]
+**SHARED** <@409796959998705670> <@343237873224646657>
+[1-3 paragraphs for items requiring both owners. Highest-risk items — security, key partnership decisions, blockers for both sides.]
 
 **MEETING PREP**
-[1-2 sentences on what's on the calendar in the next 7 days. If no meetings, say so and redirect to pipeline cleanup items instead.]
+[1-2 sentences. What's on the calendar next 7 days. If nothing, say so and name the pipeline items that should replace it.]
 
 **DECISIONS**
-[3-5 short sentences, each starting with "Decide". These are explicit choices that need a yes/no/go today. Not tasks — actual decisions with a clear either/or.]
+[3-5 sentences, each starting with "Decide". Real choices with clear either/or stakes. Not tasks.]
 
 **FYIs**
-[1-2 sentences on low-priority info: marketing noise, promotional emails, routine confirmations. Things worth noting but not acting on.]
+[1-2 sentences. Low-priority info worth logging but not acting on today.]
 
 **MISSING ACCESS OR UNCERTAINTY**
-[1-2 sentences being honest about what wasn't scanned, what's carried from memory vs live data, or where confidence is low. Omit if everything was clean.]
-
-Rules:
-- No bullet points anywhere. Prose only.
-- No emojis.
-- Use real names, real amounts, real dates from the messages — never generic placeholders.
-- @mention the owner on each section header.
-- Omit any section that has nothing to say.
-- Keep the full digest under 50 lines.`;
+[Honest 1-2 sentences about gaps in the scan — channels not read, items carried from memory vs live data. Omit if clean.]`;
 
 export function buildUserPrompt(
   messages: NormalizedMessage[],
