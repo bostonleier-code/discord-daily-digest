@@ -50,10 +50,10 @@ export async function runDailyDigest(): Promise<{ success: boolean; message: str
     previousState = { openLoops: [], recentDigestIds: [] };
   }
 
-  console.log(`[digest] Sending ${allMessages.length} messages to Gemini...`);
+  console.log(`[digest] Sending ${allMessages.length} messages to Groq...`);
   let output;
   try {
-    output = await analyzeMessages(config.geminiApiKey, allMessages, previousState);
+    output = await analyzeMessages(config.groqApiKey, allMessages, previousState);
     console.log("[digest] Analysis complete.");
   } catch (err) {
     const msg = `[digest] Analysis failed: ${(err as Error).message}`;

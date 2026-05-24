@@ -10,9 +10,13 @@ export async function analyzeMessages(
   const userPrompt = buildUserPrompt(messages, previousState, today);
 
   const body = {
-    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-    contents: [{ role: "user", parts: [{ text: userPrompt }] }],
-    generationConfig: { responseMimeType: "application/json" },
+    model: "llama-3.3-70b-versatile",
+    messages: [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: userPrompt },
+    ],
+    response_format: { type: "json_object" },
+    temperature: 0.3,
   };
 
   const controller = new AbortController();
@@ -20,15 +24,15 @@ export async function analyzeMessages(
 
   let res: Response;
   try {
-    res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-        signal: controller.signal,
-      }
-    );
+    res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
   } finally {
     clearTimeout(timer);
   }
@@ -36,10 +40,10 @@ export async function analyzeMessages(
   const json = await res.json() as any;
 
   if (!res.ok) {
-    throw new Error(`Gemini API error ${res.status}: ${json?.error?.message ?? JSON.stringify(json)}`);
+    throw new Error(`Groq API error ${res.status}: ${json?.error?.message ?? JSON.stringify(json)}`);
   }
 
-  const raw: string = json.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+  const raw: string = json.choices?.[0]?.message?.content ?? "";
   return parseOutput(raw);
 }
 

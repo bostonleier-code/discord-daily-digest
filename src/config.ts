@@ -17,7 +17,7 @@ export function loadConfig() {
       .map((s) => s.trim())
       .filter(Boolean),
     discordDigestChannelId: require_env("DISCORD_DIGEST_CHANNEL_ID"),
-    geminiApiKey: require_env("GEMINI_API_KEY"),
+    groqApiKey: require_env("GROQ_API_KEY"),
     lookbackHours: parseInt(optional_env("LOOKBACK_HOURS", "48"), 10),
   };
 }
