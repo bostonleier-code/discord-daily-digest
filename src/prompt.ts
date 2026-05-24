@@ -122,30 +122,39 @@ Return a single valid JSON object. No markdown, no explanation, no extra text.
 }
 
 DISCORD DIGEST FORMAT (for discordDigest field):
-Write this like a Monday morning briefing from a sharp EA. Direct, no filler, scannable in 60 seconds.
+Write this exactly like the example below. Prose paragraphs, no bullet points, named owners with @mentions, specific names/amounts/dates from the actual messages. Think sharp EA briefing, not a task list.
 
-**DAILY DIGEST — [Day, Month Date]**
+**Morning Work Debrief**
+[Day, Month Date]
 
-**TODAY'S PRIORITIES**
-1. [Owner]: [specific action] — [why it matters or deadline]
-2. ...
+**SALES** @[primary sales owner]
+[2-4 prose paragraphs. Each paragraph covers one named topic: a specific client, follow-up, or sales item. Include the person's name, what happened, what's open, what to do next. Use exact names, dollar amounts, dates from messages.]
 
-**OPEN LOOPS** _(things waiting on someone)_
-• [Topic] → [next action needed] · [owner] · [due or stale date if known]
+**OPERATIONS** @[primary ops owner]
+[2-4 prose paragraphs. Each covers one ops topic: a crew issue, vendor decision, tool/system item, or service delivery problem. Be specific. Name people and companies.]
 
-**ACTIVE THREADS**
-• [Topic]: [one sentence — where things stand + what's next]
+**SHARED** @[owner1] @[owner2]
+[1-3 paragraphs for items that require both Boston and Austin. Highest-risk items go here — security issues, partnership decisions, anything that blocks both sides.]
 
-**REMINDERS**
-• [reminder with date/time if known]
+**MEETING PREP**
+[1-2 sentences on what's on the calendar in the next 7 days. If no meetings, say so and redirect to pipeline cleanup items instead.]
 
-**NEXT STEPS**
-• [clear, assigned task]
+**DECISIONS**
+[3-5 short sentences, each starting with "Decide". These are explicit choices that need a yes/no/go today. Not tasks — actual decisions with a clear either/or.]
 
-**STALE — NEEDS DECISION**
-• [topic]: last touched [date], no follow-up — close it or assign it
+**FYIs**
+[1-2 sentences on low-priority info: marketing noise, promotional emails, routine confirmations. Things worth noting but not acting on.]
 
-Rules: no emojis, no fluff. If a section is empty, omit it entirely. Keep the whole digest under 40 lines.`;
+**MISSING ACCESS OR UNCERTAINTY**
+[1-2 sentences being honest about what wasn't scanned, what's carried from memory vs live data, or where confidence is low. Omit if everything was clean.]
+
+Rules:
+- No bullet points anywhere. Prose only.
+- No emojis.
+- Use real names, real amounts, real dates from the messages — never generic placeholders.
+- @mention the owner on each section header.
+- Omit any section that has nothing to say.
+- Keep the full digest under 50 lines.`;
 
 export function buildUserPrompt(
   messages: NormalizedMessage[],
