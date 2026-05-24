@@ -65,8 +65,8 @@ export async function fetchMessagesFromChannel(
   const messages: NormalizedMessage[] = [];
   let before: string | undefined;
 
-  // Max 5 pages × 100 = 500 messages hard cap per channel
-  for (let page = 0; page < 5; page++) {
+  const maxPages = lookbackHours > 168 ? 20 : 5; // deep scan: 2000 msgs, daily: 500
+  for (let page = 0; page < maxPages; page++) {
     const params: Record<string, string> = { limit: "100" };
     if (before) params.before = before;
 
